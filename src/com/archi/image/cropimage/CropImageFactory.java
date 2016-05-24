@@ -35,4 +35,8 @@ public class CropImageFactory extends ImageAbstract implements Image{
 	{
 		return getOriginalImage().getHeight();		
 	}
+    public BufferedImage cropImage(int x, int y, int width, int height) throws IOException
+    {
+		return getOriginalImage().getSubimage(x, y, width, height);		
+    }
 }

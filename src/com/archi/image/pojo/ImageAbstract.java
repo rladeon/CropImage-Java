@@ -22,11 +22,11 @@ public abstract class ImageAbstract {
 	/**
 	 * 
 	 */
-	private BufferedImage originalImage;
+	private static BufferedImage originalImage;
 	private BufferedImage subImage;
 	private BufferedImage outImage;
-	private File folder;
-    private File[] listOfFiles;// = folder.listFiles();
+	private static File folder;
+    private static File[] listOfFiles;// = folder.listFiles();
 	public ImageAbstract() {
 		// TODO Auto-generated constructor stub
 	}
@@ -42,15 +42,12 @@ public abstract class ImageAbstract {
 	public void setOriginalImage(BufferedImage originalImage) {
 		this.originalImage = originalImage;
 	}
-	public BufferedImage readImage(String urlimage) throws IOException
+	public static BufferedImage readImage(String urlimage) throws IOException
     {
     	return originalImage = ImageIO.read(new File(urlimage));    	
     }
-	public BufferedImage cropImage(int x, int y, int width, int height) throws IOException
-    {
-		return originalImage.getSubimage(x, y, width, height);		
-    }
-	public void writeImage(BufferedImage b, String extension, String urlimage) throws IOException
+	
+	public static void writeImage(BufferedImage b, String extension, String urlimage) throws IOException
     {
 		File outputfile = new File(urlimage);
 		ImageIO.write(b, extension, outputfile);    	    	
@@ -91,10 +88,18 @@ public abstract class ImageAbstract {
 	public void setListOfFiles(File[] listOfFiles) {
 		this.listOfFiles = listOfFiles;
 	}
-	public void handle(){
+	public static void handleResize(String urlin, String urlout, int width, int height) throws IOException{
+		folder = new File(urlin);
+		listOfFiles = folder.listFiles();
 		 for (File files : listOfFiles) {
              if (files.isFile()) {
                System.out.println("File " + files.getName());
+               originalImage = readImage(urlin+files.getName());
+               double aspectRatio = (double) originalImage.getWidth(null)/(double) originalImage.getHeight(null);
+               originalImage = resizeImage(originalImage, width, (int) (height/aspectRatio));
+               String ext = getFileExtension(files);
+               
+               writeImage(originalImage, ext, urlout+files.getName());
                
              }
        }
@@ -124,5 +129,10 @@ public abstract class ImageAbstract {
         graphics2D.dispose();
         return bufferedImage;
     }
-
+	 private static String getFileExtension(File file) {
+	        String fileName = file.getName();
+	        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+	        return fileName.substring(fileName.lastIndexOf(".")+1);
+	        else return "";
+	    }
 }

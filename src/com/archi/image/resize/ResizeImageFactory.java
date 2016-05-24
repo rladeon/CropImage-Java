@@ -3,6 +3,8 @@
  */
 package com.archi.image.resize;
 
+import java.io.IOException;
+
 import com.archi.image.pojo.ImageAbstract;
 import com.archi.image.services.Image;
 
@@ -12,6 +14,7 @@ import com.archi.image.services.Image;
  */
 public class ResizeImageFactory extends ImageAbstract implements Image{
 
+	private static final String String = null;
 	/**
 	 * 
 	 */
@@ -30,5 +33,11 @@ public class ResizeImageFactory extends ImageAbstract implements Image{
 		// TODO Auto-generated method stub
 		return getOriginalImage().getHeight();
 	}
+	public static void main(String[] args) throws IOException {
+		
+		
+		handleResize("/home/rudi/Images/", "/home/rudi/Images/newImg/",640,640);
+	}
+	
 
 }

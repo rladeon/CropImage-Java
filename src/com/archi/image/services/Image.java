@@ -10,4 +10,5 @@ package com.archi.image.services;
 public interface Image {
 	float getOriginalWidth();
 	float getOriginalHeight();
+	
 }
