@@ -27,20 +27,21 @@ public abstract class ImageAbstract {
 	private BufferedImage outImage;
 	private static File folder;
     private static File[] listOfFiles;// = folder.listFiles();
+	private static BufferedImage s;
 	public ImageAbstract() {
 		// TODO Auto-generated constructor stub
 	}
 	/**
 	 * @return the originalImage
 	 */
-	public BufferedImage getOriginalImage() {
+	public static BufferedImage getOriginalImage() {
 		return originalImage;
 	}
 	/**
 	 * @param originalImage the originalImage to set
 	 */
-	public void setOriginalImage(BufferedImage originalImage) {
-		this.originalImage = originalImage;
+	public static void setOriginalImage(BufferedImage originalImage) {
+		ImageAbstract.setS(originalImage);
 	}
 	public static BufferedImage readImage(String urlimage) throws IOException
     {
@@ -74,7 +75,7 @@ public abstract class ImageAbstract {
 	 * @param folder the folder to set
 	 */
 	public void setFolder(File folder) {
-		this.folder = folder;
+		ImageAbstract.folder = folder;
 	}
 	/**
 	 * @return the listOfFiles
@@ -86,7 +87,7 @@ public abstract class ImageAbstract {
 	 * @param listOfFiles the listOfFiles to set
 	 */
 	public void setListOfFiles(File[] listOfFiles) {
-		this.listOfFiles = listOfFiles;
+		ImageAbstract.listOfFiles = listOfFiles;
 	}
 	public static void handleResize(String urlin, String urlout, int width, int height) throws IOException{
 		folder = new File(urlin);
@@ -129,10 +130,30 @@ public abstract class ImageAbstract {
         graphics2D.dispose();
         return bufferedImage;
     }
-	 private static String getFileExtension(File file) {
+	 protected static String getFileExtension(File file) {
 	        String fileName = file.getName();
 	        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
 	        return fileName.substring(fileName.lastIndexOf(".")+1);
 	        else return "";
 	    }
+	/**
+	 * @return the s
+	 */
+	public static BufferedImage getS() {
+		return s;
+	}
+	/**
+	 * @param s the s to set
+	 */
+	public static void setS(BufferedImage s) {
+		ImageAbstract.s = s;
+	}
+	public static int getOriginalWidth() {
+		// TODO Auto-generated method stub
+		return getOriginalImage().getWidth();
+	}
+	public static int getOriginalHeight() {
+		// TODO Auto-generated method stub
+		return getOriginalImage().getHeight();
+	}
 }

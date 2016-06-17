@@ -7,15 +7,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
 import com.archi.image.pojo.ImageAbstract;
-import com.archi.image.services.Image;
 /**
  * @author rudi
  *
  */
-public class CropImageFactory extends ImageAbstract implements Image{
+public class CropImageFactory extends ImageAbstract {
 
 	/**
 	 * 
@@ -25,18 +22,18 @@ public class CropImageFactory extends ImageAbstract implements Image{
 		// TODO Auto-generated constructor stub
 	}
     
-    @Override
-	public float getOriginalWidth()
-	{
-		return getOriginalImage().getWidth();		
-	}
-    @Override
-	public float getOriginalHeight()
-	{
-		return getOriginalImage().getHeight();		
-	}
-    public BufferedImage cropImage(int x, int y, int width, int height) throws IOException
+   
+    public static void cropImage(String urlimage, String urldestination, int x, int y, int width, int height) throws IOException
     {
-		return getOriginalImage().getSubimage(x, y, width, height);		
+    	File io = new File(urlimage);
+    	BufferedImage img = readImage(urlimage);
+    	setOriginalImage(img);
+    	
+		writeImage(getOriginalImage().getSubimage(x, y, width, height), getFileExtension(io), urldestination+"crop_"+io.getName());		
     }
+public static void main(String[] args) throws IOException {
+		
+		
+		cropImage("/home/rudi/Images/horse-1401861_1280.jpg", "/home/rudi/Images/newImg/",0, 400, 400,400);
+	}
 }
